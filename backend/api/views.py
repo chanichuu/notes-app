@@ -15,6 +15,14 @@ class CreateUserView(generics.CreateAPIView):
     permission_classes = [AllowAny]  # allow anyone to access this view
 
 
+class UserListCreate(generics.ListCreateAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return User.objects.filter(pk=self.request.user.pk)
+
+
 class NoteListCreate(generics.ListCreateAPIView):
     serializer_class = NoteSerializer
     permission_classes = [IsAuthenticated]
