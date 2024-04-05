@@ -3,6 +3,9 @@
     margin: 20px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
+    height: 150px;
+    width: 30%;
+    background-color: rgb(204, 233, 236);
 }
 
 .note-title {
@@ -20,7 +23,7 @@
 }
 
 .update-button {
-    background-color: #3652f4;
+    background-color: #647af8;
     /* Red */
     color: white;
     border: none;
@@ -38,7 +41,7 @@
 }
 
 .delete-button {
-    background-color: #f44336;
+    background-color: #e75147;
     /* Red */
     color: white;
     border: none;

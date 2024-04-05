@@ -5,12 +5,27 @@ import "../styles/Home.css"
 
 function Home() {
     const [notes, setNotes] = useState([]);
+    const [username, setUsername] = useState("User");
     const [content, setContent] = useState("");
     const [title, setTitle] = useState("");
+    const [state, setState] = useState("create");
+    const [noteId, setNoteId] = useState(-1);
 
     useEffect(() => {
+        getUser();
         getNotes();
     }, []);
+
+    const getUser = () => {
+        api
+            .get("/api/user/current/")
+            .then((res) => res.data)
+            .then((data) => {
+                setUsername(data[0].username);
+                console.log(data);
+            })
+            .catch((err) => alert(err));
+    };
 
     const getNotes = () => {
         api
@@ -46,9 +61,12 @@ function Home() {
             .catch((err) => alert(err));
     };
 
-    const updateNote = (id) => {
-        api.put(`/api/notes/update/${id}/`, { content, title })
+    const updateNote = (e) => {
+        api
+            .put(`/api/notes/update/${noteId}/`, { content, title })
             .then((res) => {
+                console.log("hellooo put")
+                console.log(res.status)
                 if (res.status === 200) alert("Note updated!");
                 else alert("Failed to update note.");
                 getNotes();
@@ -56,38 +74,49 @@ function Home() {
             .catch((error) => alert(error));
     };
 
+    const handleCancel = () => {
+        setState("create");
+    };
+
+    let heading = state === "create" ? "Create a Note" : "Edit Note";
+    let onSubmit = state === "create" ? createNote : updateNote;
+
     return (
         <div>
             <div>
-                <h2>Notes</h2>
+                <h1>Manage your Notes</h1>
+                <h2>{username}'s Notes:</h2>
                 {notes.map((note) => (
-                    <Note note={note} onDelete={deleteNote} onChange={updateNote} key={note.id} />
+                    <Note note={note} onDelete={deleteNote} onChange={setState} setNoteId={setNoteId} key={note.id} />
                 ))}
             </div>
-            <h2>Create a Note</h2>
-            <form onSubmit={createNote}>
-                <label htmlFor="title">Title:</label>
-                <br />
-                <input
-                    type="text"
-                    id="title"
-                    name="title"
-                    required
-                    onChange={(e) => setTitle(e.target.value)}
-                    value={title}
-                />
-                <label htmlFor="content">Content:</label>
-                <br />
-                <textarea
-                    id="content"
-                    name="content"
-                    required
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                ></textarea>
-                <br />
-                <input type="submit" value="Submit"></input>
-            </form>
+            <div className="home-container">
+                <h2>{heading}</h2>
+                <form onSubmit={onSubmit}>
+                    <label htmlFor="title">Title:</label>
+                    <br />
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        required
+                        onChange={(e) => setTitle(e.target.value)}
+                        value={title}
+                    />
+                    <label htmlFor="content">Content:</label>
+                    <br />
+                    <textarea
+                        id="content"
+                        name="content"
+                        required
+                        value={content}
+                        onChange={(e) => setContent(e.target.value)}
+                    ></textarea>
+                    <br />
+                    <input type="submit" value="Submit"></input>
+                    {state === "edit" && <button className="cancel-button" onClick={handleCancel}>Cancel</button>}
+                </form>
+            </div>
         </div>
     );
 }
