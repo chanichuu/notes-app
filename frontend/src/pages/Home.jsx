@@ -65,8 +65,6 @@ function Home() {
         api
             .put(`/api/notes/update/${noteId}/`, { content, title })
             .then((res) => {
-                console.log("hellooo put")
-                console.log(res.status)
                 if (res.status === 200) alert("Note updated!");
                 else alert("Failed to update note.");
                 getNotes();
@@ -87,7 +85,7 @@ function Home() {
                 <h1>Manage your Notes</h1>
                 <h2>{username}'s Notes:</h2>
                 {notes.map((note) => (
-                    <Note note={note} onDelete={deleteNote} onChange={setState} setNoteId={setNoteId} key={note.id} />
+                    <Note note={note} onDelete={deleteNote} onChange={setState} setNoteId={setNoteId} setTitle={setTitle} setContent={setContent} key={note.id} />
                 ))}
             </div>
             <div className="home-container">

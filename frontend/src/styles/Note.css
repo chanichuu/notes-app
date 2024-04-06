@@ -1,11 +1,8 @@
 .note-container {
     padding: 10px;
     margin: 20px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
     height: 150px;
     width: 30%;
-    background-color: rgb(204, 233, 236);
 }
 
 .note-title {
@@ -23,7 +20,7 @@
 }
 
 .update-button {
-    background-color: #647af8;
+    background-color: rgb(100, 122, 248);
     /* Red */
     color: white;
     border: none;

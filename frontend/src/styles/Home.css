@@ -13,18 +13,11 @@ div {
     font-size: 24px;
 }
 
-/* Styles for individual notes - assuming your Note component has some container element */
-.note {
-    background-color: #f9f9f9;
-    border-left: 5px solid #007bff;
-    margin: 10px 0;
-    padding: 10px 15px;
-    border-radius: 5px;
-}
-
 .home-container {
     padding: 10px;
-    margin: 20px 0;
+    margin: 50px 100px 50px 100px;
+    height: 350px;
+    width: 80%;
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: rgb(204, 233, 236);
